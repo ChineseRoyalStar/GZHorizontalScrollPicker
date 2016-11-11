@@ -8,6 +8,10 @@
 
 #import "ViewController.h"
 
+#import "GZHorizontalScrollPicker.h"
+
+#import "GZTickMarkScrollView.h"
+
 @interface ViewController ()
 
 @end
@@ -16,7 +20,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view, typically from a nib.
+
+    GZHorizontalScrollPicker *picker = [[GZHorizontalScrollPicker alloc]initWithFrame:CGRectMake(0, 100, [UIScreen mainScreen].bounds.size.width, 100)];
+    
+    for(int i=1;i<13;i++) {
+        
+        NSNumber *number = [NSNumber numberWithInt:i];
+        
+        [picker.dataSource addObject:number.stringValue];
+    }
+                               
+    [self.view addSubview:picker];
+
 }
 
 

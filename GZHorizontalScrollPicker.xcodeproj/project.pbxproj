@@ -13,6 +13,9 @@
 		22B1AAA31DD46C1000EFA820 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22B1AAA11DD46C1000EFA820 /* Main.storyboard */; };
 		22B1AAA51DD46C1000EFA820 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 22B1AAA41DD46C1000EFA820 /* Assets.xcassets */; };
 		22B1AAA81DD46C1000EFA820 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22B1AAA61DD46C1000EFA820 /* LaunchScreen.storyboard */; };
+		22B1AAB21DD46E4300EFA820 /* GZHorizontalScrollPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B1AAB11DD46E4300EFA820 /* GZHorizontalScrollPicker.m */; };
+		22B1AAB51DD474E300EFA820 /* GZHorizontalScrollCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B1AAB41DD474E300EFA820 /* GZHorizontalScrollCell.m */; };
+		22B1AAB81DD47F6100EFA820 /* GZTickMarkScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 22B1AAB71DD47F6100EFA820 /* GZTickMarkScrollView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,12 @@
 		22B1AAA41DD46C1000EFA820 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		22B1AAA71DD46C1000EFA820 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		22B1AAA91DD46C1000EFA820 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		22B1AAB01DD46E4300EFA820 /* GZHorizontalScrollPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZHorizontalScrollPicker.h; sourceTree = "<group>"; };
+		22B1AAB11DD46E4300EFA820 /* GZHorizontalScrollPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZHorizontalScrollPicker.m; sourceTree = "<group>"; };
+		22B1AAB31DD474E300EFA820 /* GZHorizontalScrollCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZHorizontalScrollCell.h; sourceTree = "<group>"; };
+		22B1AAB41DD474E300EFA820 /* GZHorizontalScrollCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZHorizontalScrollCell.m; sourceTree = "<group>"; };
+		22B1AAB61DD47F6100EFA820 /* GZTickMarkScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GZTickMarkScrollView.h; sourceTree = "<group>"; };
+		22B1AAB71DD47F6100EFA820 /* GZTickMarkScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GZTickMarkScrollView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +67,7 @@
 		22B1AA971DD46C1000EFA820 /* GZHorizontalScrollPicker */ = {
 			isa = PBXGroup;
 			children = (
+				22B1AAAF1DD46D9600EFA820 /* GZHorizontalScrollPicker */,
 				22B1AA9B1DD46C1000EFA820 /* AppDelegate.h */,
 				22B1AA9C1DD46C1000EFA820 /* AppDelegate.m */,
 				22B1AA9E1DD46C1000EFA820 /* ViewController.h */,
@@ -77,6 +87,19 @@
 				22B1AA991DD46C1000EFA820 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		22B1AAAF1DD46D9600EFA820 /* GZHorizontalScrollPicker */ = {
+			isa = PBXGroup;
+			children = (
+				22B1AAB01DD46E4300EFA820 /* GZHorizontalScrollPicker.h */,
+				22B1AAB11DD46E4300EFA820 /* GZHorizontalScrollPicker.m */,
+				22B1AAB31DD474E300EFA820 /* GZHorizontalScrollCell.h */,
+				22B1AAB41DD474E300EFA820 /* GZHorizontalScrollCell.m */,
+				22B1AAB61DD47F6100EFA820 /* GZTickMarkScrollView.h */,
+				22B1AAB71DD47F6100EFA820 /* GZTickMarkScrollView.m */,
+			);
+			path = GZHorizontalScrollPicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,6 +174,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				22B1AAA01DD46C1000EFA820 /* ViewController.m in Sources */,
+				22B1AAB21DD46E4300EFA820 /* GZHorizontalScrollPicker.m in Sources */,
+				22B1AAB81DD47F6100EFA820 /* GZTickMarkScrollView.m in Sources */,
+				22B1AAB51DD474E300EFA820 /* GZHorizontalScrollCell.m in Sources */,
 				22B1AA9D1DD46C1000EFA820 /* AppDelegate.m in Sources */,
 				22B1AA9A1DD46C1000EFA820 /* main.m in Sources */,
 			);
