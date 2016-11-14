@@ -45,6 +45,17 @@
     return _pointArray;
 }
 
+- (UIView *)blackScaleView {
+    
+    if(!_blackScaleView) {
+        
+        _blackScaleView = [[UIView alloc]init];
+        
+        _blackScaleView.backgroundColor = [UIColor blackColor];
+    }
+    return _blackScaleView;
+}
+
 /**
  * @绘制刻度线和底线
  */
@@ -71,21 +82,26 @@
     path.lineCapStyle = kCGLineCapRound;
     
     //循环绘制刻度线
-    for(int i=1; i<13; i++){
+    for(int i=1; i<10; i++){
         
-        CGPoint startPoint = CGPointMake(kScaleSpacing*i-20, self.frame.size.height-5);
-        CGPoint endPoint = CGPointMake(kScaleSpacing*i-20, self.frame.size.height-25);
+        CGPoint startPoint = CGPointMake(kScaleSpacing*i-25, self.frame.size.height-5);
+        CGPoint endPoint = CGPointMake(kScaleSpacing*i-25, self.frame.size.height-25);
         
+        [self.pointArray addObject:[NSValue valueWithCGPoint:startPoint]];
         [path moveToPoint:startPoint];
-        
         [path addLineToPoint:endPoint];
-        
     }
     
     shape.path = path.CGPath;
-    
     [self.layer addSublayer:shape];
     
+    CGPoint basePoint = [self.pointArray objectAtIndex:4].CGPointValue;
+    CGFloat width = 6;
+    CGFloat height = 30;
+    CGFloat originX = basePoint.x - width/2;
+    CGFloat originY = basePoint.y - height;
+    self.blackScaleView.frame = CGRectMake(originX, originY, width, height);
+    [self addSubview:self.blackScaleView];
 }
 
 - (void)drawRect:(CGRect)rect {

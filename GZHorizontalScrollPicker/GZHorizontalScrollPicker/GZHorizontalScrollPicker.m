@@ -31,6 +31,8 @@ const CGFloat kPadding = 20;
  */
 @property(nonatomic,assign) NSInteger selectedItemIndex;
 
+@property(nonatomic,strong) UIView *backgroundView;
+
 @end
 
 @implementation GZHorizontalScrollPicker
@@ -47,8 +49,9 @@ const CGFloat kPadding = 20;
         layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         layout.minimumLineSpacing = 0;
         layout.minimumInteritemSpacing = 0;
-        
+
         //Create collectionview with flowlayout
+        
         _pickerView =  [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height/3) collectionViewLayout:layout];
         _pickerView.dataSource = self;
         _pickerView.delegate = self;
@@ -62,11 +65,17 @@ const CGFloat kPadding = 20;
         
         //Create GZTickMarkScrollView
         CGRect rect = CGRectMake(0, self.pickerView.frame.size.height, frame.size.width,frame.size.height/3*2);
-        _scaleScroll = [[GZTickMarkScrollView alloc]initWithFrame:rect withContentSize:CGSizeMake(rect.size.width*1.5, rect.size.height)];
+
+        _scaleScroll = [[GZTickMarkScrollView alloc]initWithFrame:rect withContentSize:CGSizeMake(rect.size.width, rect.size.height)];
         _scaleScroll.delegate = self;
         _scaleScroll.scrollEnabled = NO;
         [self addSubview:_scaleScroll];
         
+        _backgroundView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 25, 25)];
+        _backgroundView.backgroundColor = [UIColor clearColor];
+        CGPoint center = CGPointMake(self.center.x, 20);
+        _backgroundView.center = center;
+        [self addSubview:_backgroundView];
     }
     
     return self;
@@ -89,16 +98,19 @@ const CGFloat kPadding = 20;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     
-    return self.dataSource.count;
+    return 1000;
+    
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSInteger currentIndexInArray = indexPath.row % self.dataSource.count;
     
     static NSString *reusedIdentifier = @"gzcell";
     
     GZHorizontalScrollCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reusedIdentifier forIndexPath:indexPath];
     
-    if(indexPath.row == self.selectedItemIndex) {
+    if(currentIndexInArray == self.selectedItemIndex) {
         
         [cell.titleLabel setFont:[UIFont boldSystemFontOfSize:25]];
     }else {
@@ -106,7 +118,7 @@ const CGFloat kPadding = 20;
         [cell.titleLabel setFont:[UIFont systemFontOfSize:20]];
     }
     
-    NSString *title = [self.dataSource objectAtIndex:indexPath.row];
+    NSString *title = [self.dataSource objectAtIndex:currentIndexInArray];
     
     cell.titleLabel.text = title;
     
@@ -114,40 +126,50 @@ const CGFloat kPadding = 20;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    
-    //GZHorizontalScrollCell *previousSelectedItem = (GZHorizontalScrollCell *)[collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedItemIndex inSection:0]];
-    
-    //if(previousSelectedItem) {
-        
-    //    [previousSelectedItem.titleLabel setFont:[UIFont systemFontOfSize:20]];
-    //}
-    
-   // GZHorizontalScrollCell *selectedItem = (GZHorizontalScrollCell *)[collectionView cellForItemAtIndexPath:indexPath];
-   // [selectedItem.titleLabel setFont:[UIFont boldSystemFontOfSize:25]];
-    self.selectedItemIndex = indexPath.row;
+
+    self.selectedItemIndex = indexPath.row % self.dataSource.count;
     
    [self.pickerView reloadData];
     
 }
-
-#pragma mark - UIScrollViewDelegate
+#pragma mark - UIScrollView Delegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     if(scrollView == self.pickerView) {
         
-        [UIView animateWithDuration:0.3 animations:^{
-            
-            self.scaleScroll.contentOffset = self.pickerView.contentOffset;
-        }];
-    }else if(scrollView == self.scaleScroll) {
+        GZHorizontalScrollCell *perviousCenterCell = (GZHorizontalScrollCell *)[self.pickerView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:self.selectedItemIndex inSection:0]];
+        [perviousCenterCell.titleLabel setFont:[UIFont systemFontOfSize:20]];
         
-        [UIView animateWithDuration:0.5 animations:^{
-            
-            self.pickerView.contentOffset = self.scaleScroll.contentOffset;
-        }];
+        int centerIndex = (int)[NSNumber numberWithDouble:(scrollView.contentOffset.x+self.pickerView.center.x)].integerValue/[NSNumber numberWithDouble:kCellWidth].integerValue;
+        
+        GZHorizontalScrollCell *currentCenterCell = (GZHorizontalScrollCell *)[self.pickerView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:centerIndex inSection:0]];
+        [currentCenterCell.titleLabel setFont:[UIFont boldSystemFontOfSize:25]];
+        self.selectedItemIndex = centerIndex;
+    }
+
+}
+
+//结束滑动回调
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
+    if(scrollView == self.pickerView) {
+        
+        int x = round(self.pickerView.contentOffset.x)/round(kCellWidth);
+        
+        self.pickerView.contentOffset = CGPointMake(x*kCellWidth, 0);
     }
 }
 
+//结束拖拽回调
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    
+    if(scrollView == self.pickerView) {
+        
+        int x = round((float)round(self.pickerView.contentOffset.x)/round(kCellWidth));
+        
+        self.pickerView.contentOffset = CGPointMake(x*kCellWidth, 0);
+    }
+}
 
 @end

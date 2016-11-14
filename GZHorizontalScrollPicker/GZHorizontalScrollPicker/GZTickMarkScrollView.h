@@ -11,7 +11,9 @@
 
 @interface GZTickMarkScrollView : UIScrollView
 
-@property(nonatomic,strong) NSMutableArray *pointArray;
+@property(nonatomic,strong) NSMutableArray<NSValue *> *pointArray;
+
+@property(nonatomic,strong) UIView *blackScaleView;
 
 - (instancetype)initWithFrame:(CGRect)frame withContentSize:(CGSize) contentSize;
 
